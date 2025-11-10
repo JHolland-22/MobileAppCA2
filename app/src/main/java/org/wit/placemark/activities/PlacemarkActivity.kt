@@ -23,11 +23,10 @@ class PlacemarkActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlacemarkBinding
     var placemark = PlacemarkModel()
     lateinit var app: MainApp
-    var location = Location(52.245696, -7.139102, 15f)
-
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    val IMAGE_REQUEST = 1
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-
+    var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +37,6 @@ class PlacemarkActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
-        binding.placemarkLocation.setOnClickListener {
-            i ("Set Location Pressed")
-        }
-        binding.placemarkLocation.setOnClickListener {
-            val launcherIntent = Intent(this, MapsActivity::class.java)
-                .putExtra("location", location)
-            mapIntentLauncher.launch(launcherIntent)
-        }
-
-
 
         app = application as MainApp
 
@@ -55,7 +44,7 @@ class PlacemarkActivity : AppCompatActivity() {
 
         if (intent.hasExtra("placemark_edit")) {
             edit = true
-            // Requires API 33+
+            // Requires API 33
             // placemark = intent.getParcelableExtra("placemark_edit",PlacemarkModel::class.java)!!
             placemark = intent.extras?.getParcelable("placemark_edit")!!
             binding.placemarkTitle.setText(placemark.title)
@@ -64,6 +53,10 @@ class PlacemarkActivity : AppCompatActivity() {
             Picasso.get()
                 .load(placemark.image)
                 .into(binding.placemarkImage)
+            if (placemark.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_placemark_image)
+            }
+
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -71,7 +64,7 @@ class PlacemarkActivity : AppCompatActivity() {
             placemark.description = binding.description.text.toString()
             if (placemark.title.isEmpty()) {
                 Snackbar.make(it,R.string.enter_placemark_title, Snackbar.LENGTH_LONG)
-                        .show()
+                    .show()
             } else {
                 if (edit) {
                     app.placemarks.update(placemark.copy())
@@ -88,7 +81,14 @@ class PlacemarkActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
 
+        binding.placemarkLocation.setOnClickListener {
+            val launcherIntent = Intent(this, MapsActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
         registerImagePickerCallback()
+        registerMapCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -109,7 +109,7 @@ class PlacemarkActivity : AppCompatActivity() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
-                when (result.resultCode) {
+                when(result.resultCode){
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
@@ -117,31 +117,13 @@ class PlacemarkActivity : AppCompatActivity() {
                             Picasso.get()
                                 .load(placemark.image)
                                 .into(binding.placemarkImage)
-                        }
-                        if (intent.hasExtra("placemark_edit")) {
-                            Picasso.get()
-                                .load(placemark.image)
-                                .into(binding.placemarkImage)
-                            if (placemark.image != Uri.EMPTY) {
-                                binding.chooseImage.setText(R.string.change_placemark_image)
-                            }
-
-                        }
-
-                        if (result.data != null) {
-                            i("Got Result ${result.data!!.data}")
-                            placemark.image = result.data!!.data!!
-                            Picasso.get()
-                                .load(placemark.image)
-                                .into(binding.placemarkImage)
                             binding.chooseImage.setText(R.string.change_placemark_image)
-                        }
+                        } // end of if
                     }
-                        RESULT_CANCELED -> { } else -> { }
-                    }
+                    RESULT_CANCELED -> { } else -> { }
                 }
             }
-
+    }
 
     private fun registerMapCallback() {
         mapIntentLauncher =
@@ -151,7 +133,8 @@ class PlacemarkActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            //location = result.data!!.extras?.getParcelable("location",Location::class.java)!!
+                            // Requires API 33
+                            // location = result.data!!.extras?.getParcelable("location",Location::class.java)!!
                             location = result.data!!.extras?.getParcelable("location")!!
                             i("Location == $location")
                         } // end of if
@@ -160,5 +143,4 @@ class PlacemarkActivity : AppCompatActivity() {
                 }
             }
     }
-
 }
