@@ -1,6 +1,7 @@
 package org.wit.placemark.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +15,7 @@ import org.wit.placemark.databinding.ActivityPlacemarkBinding
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
 import org.wit.placemark.helpers.showImagePicker
+import org.wit.placemark.models.Location
 import timber.log.Timber.i
 
 class PlacemarkActivity : AppCompatActivity() {
@@ -21,7 +23,18 @@ class PlacemarkActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlacemarkBinding
     var placemark = PlacemarkModel()
     lateinit var app: MainApp
+    var location = Location(52.245696, -7.139102, 15f)
+
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { i("Map Loaded") }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +45,16 @@ class PlacemarkActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
+        binding.placemarkLocation.setOnClickListener {
+            i ("Set Location Pressed")
+        }
+        binding.placemarkLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
 
         app = application as MainApp
 
@@ -93,18 +116,36 @@ class PlacemarkActivity : AppCompatActivity() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
-                when(result.resultCode){
+                when (result.resultCode) {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
                             placemark.image = result.data!!.data!!
                             Picasso.get()
-                                   .load(placemark.image)
-                                   .into(binding.placemarkImage)
-                        } // end of if
+                                .load(placemark.image)
+                                .into(binding.placemarkImage)
+                        }
+                        if (intent.hasExtra("placemark_edit")) {
+                            Picasso.get()
+                                .load(placemark.image)
+                                .into(binding.placemarkImage)
+                            if (placemark.image != Uri.EMPTY) {
+                                binding.chooseImage.setText(R.string.change_placemark_image)
+                            }
+
+                        }
+
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            placemark.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(placemark.image)
+                                .into(binding.placemarkImage)
+                            binding.chooseImage.setText(R.string.change_placemark_image)
+                        }
                     }
-                    RESULT_CANCELED -> { } else -> { }
+                        RESULT_CANCELED -> { } else -> { }
+                    }
                 }
             }
     }
-}
