@@ -5,13 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 import org.wit.placemark.databinding.ActivityPlacemarkMapsBinding
 import org.wit.placemark.databinding.ContentPlacemarkMapsBinding
 import org.wit.placemark.main.MainApp
 
-class PlacemarkMapsActivity : AppCompatActivity() {
+class PlacemarkMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
 
     lateinit var app: MainApp
 
@@ -27,6 +28,8 @@ class PlacemarkMapsActivity : AppCompatActivity() {
             val options = MarkerOptions().title(it.title).position(loc)
             map.addMarker(options)?.tag = it.id
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+            map.setOnMarkerClickListener(this)
+
         }
     }
 
@@ -73,4 +76,11 @@ class PlacemarkMapsActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         contentBinding.mapView.onSaveInstanceState(outState)
     }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        contentBinding.currentTitle.text = marker.title
+
+        return false
+    }
+
 }
