@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
 
-
     <application
         android:name=".main.MainApp"
         android:allowBackup="true"
@@ -17,6 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Placemark"
         tools:targetApi="34">
+        <activity
+            android:name=".activities.PlacemarkMapsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Placemark" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
