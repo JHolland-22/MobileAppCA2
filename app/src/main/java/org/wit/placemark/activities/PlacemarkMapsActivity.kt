@@ -2,19 +2,36 @@ package org.wit.placemark.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 import org.wit.placemark.databinding.ActivityPlacemarkMapsBinding
 import org.wit.placemark.databinding.ContentPlacemarkMapsBinding
+import org.wit.placemark.main.MainApp
 
 class PlacemarkMapsActivity : AppCompatActivity() {
+
+    lateinit var app: MainApp
+
 
     private lateinit var binding: ActivityPlacemarkMapsBinding
     private lateinit var contentBinding: ContentPlacemarkMapsBinding
     lateinit var map: GoogleMap
 
+    private fun configureMap() {
+        map.uiSettings.isZoomControlsEnabled = true
+        app.placemarks.findAll().forEach {
+            val loc = LatLng(it.lat, it.lng)
+            val options = MarkerOptions().title(it.title).position(loc)
+            map.addMarker(options)?.tag = it.id
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        app = application as MainApp
         super.onCreate(savedInstanceState)
 
         binding = ActivityPlacemarkMapsBinding.inflate(layoutInflater)
@@ -24,7 +41,12 @@ class PlacemarkMapsActivity : AppCompatActivity() {
         contentBinding = ContentPlacemarkMapsBinding.bind(binding.root)
         contentBinding.mapView.onCreate(savedInstanceState)
 
+        contentBinding.mapView.getMapAsync {
+            map = it
+            configureMap()
+        }
     }
+
 
 
     override fun onDestroy() {
