@@ -17,7 +17,7 @@ import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityMapsBinding
 import org.wit.placemark.models.Location
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
+class MapActivity : AppCompatActivity(), OnMapReadyCallback,
     GoogleMap.OnMarkerDragListener,
     GoogleMap.OnMarkerClickListener {
 

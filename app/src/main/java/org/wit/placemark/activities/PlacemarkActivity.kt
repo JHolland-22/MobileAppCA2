@@ -16,7 +16,6 @@ import org.wit.placemark.databinding.ActivityPlacemarkBinding
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.Location
 import org.wit.placemark.models.PlacemarkModel
-import org.wit.placemark.helpers.showImagePicker
 import timber.log.Timber.i
 
 class PlacemarkActivity : AppCompatActivity() {
@@ -28,10 +27,12 @@ class PlacemarkActivity : AppCompatActivity() {
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     //var location = Location(52.245696, -7.139102, 15f)
 
+    var edit = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var edit = false
+        //  edit = true
 
         binding = ActivityPlacemarkBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -93,7 +94,7 @@ class PlacemarkActivity : AppCompatActivity() {
                 location.lng = placemark.lng
                 location.zoom = placemark.zoom
             }
-            val launcherIntent = Intent(this, MapsActivity::class.java)
+            val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
         }
@@ -104,14 +105,18 @@ class PlacemarkActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_placemark, menu)
+        if (edit) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_cancel -> {
+            R.id.item_delete -> {
+                setResult(99)
+                app.placemarks.delete(placemark)
                 finish()
             }
+            R.id.item_cancel -> { finish() }
         }
         return super.onOptionsItemSelected(item)
     }

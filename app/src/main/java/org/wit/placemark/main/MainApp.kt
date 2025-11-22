@@ -18,3 +18,4 @@ class MainApp : Application() {
         i("Placemark started")
     }
 }
+
