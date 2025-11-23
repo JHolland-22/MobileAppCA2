@@ -44,4 +44,9 @@ class PlacemarkMemStore : PlacemarkStore {
     private fun logAll() {
         placemarks.forEach { i("$it") }
     }
+
+    override fun findById(id:Long) : PlacemarkModel? {
+        val foundPlacemark: PlacemarkModel? = placemarks.find { it.id == id }
+        return foundPlacemark
+    }
 }
