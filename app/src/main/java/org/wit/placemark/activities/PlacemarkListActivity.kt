@@ -1,6 +1,5 @@
 package org.wit.placemark.activities
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -43,7 +42,7 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
-                val launcherIntent = Intent(this, PlacemarkActivity::class.java)
+                val launcherIntent = Intent(this, PlacemarkView::class.java)
                 getResult.launch(launcherIntent)
             }
             R.id.item_map -> {
@@ -72,7 +71,7 @@ class PlacemarkListActivity : AppCompatActivity(), PlacemarkListener {
         }
 
     override fun onPlacemarkClick(placemark: PlacemarkModel, pos : Int) {
-        val launcherIntent = Intent(this, PlacemarkActivity::class.java)
+        val launcherIntent = Intent(this, PlacemarkView::class.java)
         launcherIntent.putExtra("placemark_edit", placemark)
         position = pos
         getClickResult.launch(launcherIntent)
