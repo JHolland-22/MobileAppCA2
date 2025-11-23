@@ -1,6 +1,6 @@
 package org.wit.placemark.views.placemark
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.Location
 import org.wit.placemark.models.PlacemarkModel
-import org.wit.placemark.views.PlacemarkView
 import org.wit.placemark.views.editlocation.EditLocationView
 import timber.log.Timber
 
@@ -40,7 +39,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
         } else {
             app.placemarks.create(placemark)
         }
-        view.setResult(RESULT_OK)
+        view.setResult(Activity.RESULT_OK)
         view.finish()
     }
 

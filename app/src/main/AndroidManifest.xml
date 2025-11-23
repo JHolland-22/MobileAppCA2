@@ -27,9 +27,9 @@
             android:value="@string/MAPS_API_KEY" />
 
         <activity
-            android:name=".activities.MapActivity"
-            android:exported="false"
+            android:name=".views.editlocation.EditLocationView"
             android:label="@string/title_activity_map" />
+
         <activity
             android:name=".activities.PlacemarkListActivity"
             android:exported="true">
@@ -43,7 +43,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".activities.PlacemarkView">
+        <activity android:name=".views.placemark.PlacemarkView">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
