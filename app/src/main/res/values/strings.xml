@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Placemark</string>
+    <!-- placemarks   -->
+    <string name="app_name">Mallow GAA / LGFA </string>
     <string name="button_addPlacemark">Add Placemark</string>
     <string name="hint_placemarkTitle">Placemark Title</string>
     <string name="hint_placemarkDescription">Description </string>
@@ -15,6 +16,7 @@
     <string name="title_activity_map" />
     <string name="MAPS_API_KEY" />
     <string name="menu_deletePlacemark">Delete</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -22,6 +24,18 @@
     <string name="previous">Previous</string>
     <string name="title_activity_placemark_maps">Map of All Placemarks</string>
 
+    <!-- clothing  -->
+    <string name="select">Select Item</string>
+    <string name="app_cloth_name">Clothes</string>
+    <string name="button_addCloth">Add Clothing</string>
+    <string name="hint_clothTitle">Clothing Title</string>
+    <string name="hint_clothDescription">Clothing Description</string>
+    <string name="menu_addCloth">Add</string>
+    <string name="menu_cancelCloth">Cancel</string>
+    <string name="enter_cloth_title"> Please enter a Clothing Title </string>
+    <string name="save_cloth"> Save Clothing </string>
+    <string name="button_addImage_cloth"> Add Image </string>
+    <string name="select_cloth_image">Select clothing image</string>
 
 
 
