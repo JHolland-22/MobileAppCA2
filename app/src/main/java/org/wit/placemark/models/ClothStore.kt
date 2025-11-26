@@ -1,4 +1,8 @@
 package org.wit.placemark.models
 
-class ClothStore {
+
+interface ClothStore {
+    fun findAll(): List<ClothModel>
+    fun create(cloth: ClothModel)
+    fun update(cloth: ClothModel)
 }
