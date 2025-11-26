@@ -29,6 +29,11 @@ class PlacemarkJSONStore(private val context: Context) : PlacemarkStore {
         }
     }
 
+
+    override fun findById(id:Long) : PlacemarkModel? {
+        val foundPlacemark: PlacemarkModel? = placemarks.find { it.id == id }
+        return foundPlacemark
+    }
     override fun findAll(): MutableList<PlacemarkModel> {
         logAll()
         return placemarks
@@ -93,4 +98,6 @@ class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
     ): JsonElement {
         return JsonPrimitive(src.toString())
     }
+
+
 }
