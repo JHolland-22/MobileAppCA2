@@ -1,4 +1,4 @@
-package org.wit.placemark.adapters
+package org.wit.placemark.views.placemarklist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
