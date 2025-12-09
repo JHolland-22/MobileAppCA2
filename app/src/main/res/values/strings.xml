@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Placemark</string>
+    <!-- placemarks   -->
+    <string name="app_name">Mallow GAA / LGFA / Camogie </string>
     <string name="button_addPlacemark">Add Placemark</string>
     <string name="hint_placemarkTitle">Placemark Title</string>
     <string name="hint_placemarkDescription">Description </string>
@@ -15,6 +16,7 @@
     <string name="title_activity_map" />
     <string name="MAPS_API_KEY" />
     <string name="menu_deletePlacemark">Delete</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -22,6 +24,18 @@
     <string name="previous">Previous</string>
     <string name="title_activity_placemark_maps">Map of All Placemarks</string>
 
+    <!-- Tickets   -->
+    <string name="select">Select Item</string>
+    <string name="app_ticket_name">Tickets</string>
+    <string name="button_addTicket">Add Tickets</string>
+    <string name="hint_ticketTitle">Ticket Title</string>
+    <string name="hint_ticketDescription">Ticket Description</string>
+    <string name="menu_addTicket">Add</string>
+    <string name="menu_cancelTicket">Cancel</string>
+    <string name="enter_ticket_title"> Please enter a Ticket Title </string>
+    <string name="save_ticket">Save Ticket</string>
+    <string name="button_addImage_ticket"> Add Image </string>
+    <string name="select_club_image">Select club image</string>
 
 
 
