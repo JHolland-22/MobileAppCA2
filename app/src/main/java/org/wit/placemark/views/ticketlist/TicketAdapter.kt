@@ -5,38 +5,38 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.placemark.models.TicketModel
-import org.wit.placemark.databinding.CardClothBinding
+import org.wit.placemark.databinding.CardTicketBinding
 
 
-interface ClothListener {
-    fun onClothClick(cloth: TicketModel)
+interface TicketListener {
+    fun onTicketClick(cloth: TicketModel)
 }
 
-class ClothAdapter(private var cloths: List<TicketModel>,
-                   private val listener: ClothListener) :
+class ClothAdapter(private var tickets: List<TicketModel>,
+                   private val listener: TicketListener) :
     RecyclerView.Adapter<ClothAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardClothBinding
+        val binding = CardTicketBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
 
         return MainHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val cloth = cloths[holder.adapterPosition]
+        val cloth = tickets[holder.adapterPosition]
         holder.bind(cloth, listener)
     }
 
-    override fun getItemCount(): Int = cloths.size
+    override fun getItemCount(): Int = tickets.size
 
-    class MainHolder(private val binding : CardClothBinding) :
+    class MainHolder(private val binding : CardTicketBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(cloth: TicketModel, listener: ClothListener) {
-            binding.clothTitle.text = cloth.title
-            binding.description.text = cloth.description
-            binding.root.setOnClickListener { listener.onClothClick(cloth) }
+        fun bind(ticket: TicketModel, listener: TicketListener) {
+            binding.ticketTitle.text = ticket.title
+            binding.description.text = ticket.description
+            binding.root.setOnClickListener { listener.onTicketClick(ticket) }
         }
     }
 }

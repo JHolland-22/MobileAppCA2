@@ -9,18 +9,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.placemark.R
-import org.wit.placemark.databinding.ActivityClothListBinding
+import org.wit.placemark.databinding.ActivityTicketListBinding
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.TicketModel
 
-class TicketListActivity : AppCompatActivity(), ClothListener {
+class TicketListActivity : AppCompatActivity(), TicketListener {
 
     lateinit var app: MainApp
-    private lateinit var binding: ActivityClothListBinding
+    private lateinit var binding: ActivityTicketListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityClothListBinding.inflate(layoutInflater)
+        binding = ActivityTicketListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
@@ -29,7 +29,7 @@ class TicketListActivity : AppCompatActivity(), ClothListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = ClothAdapter(app.cloths.findAll(), this)
+        binding.recyclerView.adapter = TicketAdapter(app.tickets.findAll(), this)
 
     }
 
@@ -41,7 +41,7 @@ class TicketListActivity : AppCompatActivity(), ClothListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> {
-                val launcherIntent = Intent(this, ClothActivity::class.java)
+                val launcherIntent = Intent(this, TicketActivity::class.java)
                 getResult.launch(launcherIntent)
             }
         }
@@ -54,13 +54,13 @@ class TicketListActivity : AppCompatActivity(), ClothListener {
         ) {
             if (it.resultCode == RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.cloths.findAll().size)
+                notifyItemRangeChanged(0,app.tickets.findAll().size)
             }
         }
 
-    override fun onClothClick(cloth: TicketModel) {
-        val launcherIntent = Intent(this, ClothActivity::class.java)
-        launcherIntent.putExtra("cloth_edit", cloth)
+    override fun onTicketClick(ticket: TicketModel) {
+        val launcherIntent = Intent(this, TicketActivity::class.java)
+        launcherIntent.putExtra("ticket_edit", ticket)
         getClickResult.launch(launcherIntent)
     }
 
@@ -71,7 +71,7 @@ class TicketListActivity : AppCompatActivity(), ClothListener {
         ) {
             if (it.resultCode == RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.cloths.findAll().size)
+                notifyItemRangeChanged(0,app.tickets.findAll().size)
             }
         }
 }
