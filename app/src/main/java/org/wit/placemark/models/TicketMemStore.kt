@@ -1,4 +1,4 @@
-package org.wit.placemark.models
+package org.wit.ticket.models
 
 import timber.log.Timber.i
 
@@ -29,6 +29,15 @@ class TicketMemStore : TicketStore {
             foundTicket.description = ticket.description
             logAll()
         }
+    }
+
+    override fun delete(ticket: TicketModel) {
+        tickets.remove(ticket)
+        logAll()
+    }
+
+    override fun findById(id: Long): TicketModel? {
+        return tickets.find { it.id == id }
     }
 
     private fun logAll() {

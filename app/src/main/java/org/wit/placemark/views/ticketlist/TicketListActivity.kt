@@ -1,4 +1,4 @@
-package org.wit.placemark.views.ticketlist
+package org.wit.ticket.views.ticketlist
 
 
 import android.content.Intent
@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityTicketListBinding
 import org.wit.placemark.main.MainApp
-import org.wit.placemark.models.TicketModel
+import org.wit.ticket.models.TicketModel
+import org.wit.ticket.views.ticket.TicketActivity
 
 class TicketListActivity : AppCompatActivity(), TicketListener {
 

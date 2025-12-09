@@ -26,16 +26,16 @@
 
     <!-- Tickets   -->
     <string name="select">Select Item</string>
-    <string name="app_cloth_name">Tickets</string>
-    <string name="button_addCloth">Add Tickets</string>
-    <string name="hint_clothTitle">Ticket Title</string>
-    <string name="hint_clothDescription">Ticket Description</string>
-    <string name="menu_addCloth">Add</string>
-    <string name="menu_cancelCloth">Cancel</string>
-    <string name="enter_cloth_title"> Please enter a Ticket Title </string>
-    <string name="save_cloth"> Save Ticket </string>
-    <string name="button_addImage_cloth"> Add Image </string>
-    <string name="select_cloth_image">Select club image</string>
+    <string name="app_ticket_name">Tickets</string>
+    <string name="button_addTicket">Add Tickets</string>
+    <string name="hint_ticketTitle">Ticket Title</string>
+    <string name="hint_ticketDescription">Ticket Description</string>
+    <string name="menu_addTicket">Add</string>
+    <string name="menu_cancelTicket">Cancel</string>
+    <string name="enter_ticket_title"> Please enter a Ticket Title </string>
+    <string name="save_ticket">Save Ticket</string>
+    <string name="button_addImage_ticket"> Add Image </string>
+    <string name="select_club_image">Select club image</string>
 
 
 

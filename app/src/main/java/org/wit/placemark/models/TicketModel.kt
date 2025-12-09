@@ -1,4 +1,4 @@
-package org.wit.placemark.models
+package org.wit.ticket.models
 
 
 import android.net.Uri

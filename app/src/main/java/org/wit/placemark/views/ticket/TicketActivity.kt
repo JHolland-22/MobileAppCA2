@@ -1,4 +1,4 @@
-package org.wit.placemark.views.ticket
+package org.wit.ticket.views.ticket
 
 import org.wit.placemark.R
 import android.content.Intent
@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.placemark.databinding.ActivityTicketBinding
 import org.wit.placemark.helpers.showImagePicker
-import org.wit.placemark.models.TicketModel
+import org.wit.ticket.models.TicketModel
 import org.wit.placemark.main.MainApp
 import timber.log.Timber
 
@@ -64,9 +64,9 @@ class TicketActivity : AppCompatActivity() {
                 Snackbar.make(it, "Please select a ticket type", Snackbar.LENGTH_LONG).show()
             } else {
                 if (edit) {
-                    app.ticket.update(ticket.copy())
+                    app.tickets.update(ticket.copy())
                 } else {
-                    app.ticket.create(ticket.copy())
+                    app.tickets.create(ticket.copy())
                 }
             }
             setResult(RESULT_OK)

@@ -7,8 +7,8 @@ import com.google.gson.reflect.TypeToken
 import org.wit.placemark.helpers.*
 import org.wit.placemark.helpers.exists
 import org.wit.placemark.helpers.write
-import org.wit.placemark.models.TicketModel
-import org.wit.placemark.models.TicketStore
+import org.wit.ticket.models.TicketModel
+import org.wit.ticket.models.TicketStore
 import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
@@ -65,8 +65,6 @@ class ClothJSONStore(private val context: Context) : TicketStore {
         tickets.remove(ticket)
         serialize()
     }
-
-
 
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(tickets, listType)
