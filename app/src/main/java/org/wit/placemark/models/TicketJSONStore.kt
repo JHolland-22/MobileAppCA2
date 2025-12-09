@@ -7,8 +7,8 @@ import com.google.gson.reflect.TypeToken
 import org.wit.placemark.helpers.*
 import org.wit.placemark.helpers.exists
 import org.wit.placemark.helpers.write
-import org.wit.placemark.models.ClothModel
-import org.wit.placemark.models.ClothStore
+import org.wit.placemark.models.TicketModel
+import org.wit.placemark.models.TicketStore
 import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
@@ -17,15 +17,15 @@ const val JSON_FILE = "clothing.json"
 val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
     .registerTypeAdapter(Uri::class.java, UriParser())
     .create()
-val listType: Type = object : TypeToken<ArrayList<ClothModel>>() {}.type
+val listType: Type = object : TypeToken<ArrayList<TicketModel>>() {}.type
 
 fun generateRandomId(): Long {
     return Random().nextLong()
 }
 
-class ClothJSONStore(private val context: Context) : ClothStore {
+class ClothJSONStore(private val context: Context) : TicketStore {
 
-    var cloths = mutableListOf<ClothModel>()
+    var cloths = mutableListOf<TicketModel>()
 
     init {
         if (exists(context, JSON_FILE)) {
@@ -34,25 +34,25 @@ class ClothJSONStore(private val context: Context) : ClothStore {
     }
 
 
-    override fun findById(id:Long) : ClothModel? {
-        val foundCloth: ClothModel? = cloths.find { it.id == id }
+    override fun findById(id:Long) : TicketModel? {
+        val foundCloth: TicketModel? = cloths.find { it.id == id }
         return foundCloth
     }
-    override fun findAll(): MutableList<ClothModel> {
+    override fun findAll(): MutableList<TicketModel> {
         logAll()
         return cloths
     }
 
-    override fun create(cloth: ClothModel) {
+    override fun create(cloth: TicketModel) {
         cloth.id = generateRandomId()
         cloths.add(cloth)
         serialize()
     }
 
 
-    override fun update(cloth: ClothModel) {
-        val clothsList = findAll() as ArrayList<ClothModel>
-        var foundCloth: ClothModel? = clothsList.find { p -> p.id == cloth.id }
+    override fun update(cloth: TicketModel) {
+        val clothsList = findAll() as ArrayList<TicketModel>
+        var foundCloth: TicketModel? = clothsList.find { p -> p.id == cloth.id }
         if (foundCloth != null) {
             foundCloth.title = cloth.title
             foundCloth.description = cloth.description
@@ -61,7 +61,7 @@ class ClothJSONStore(private val context: Context) : ClothStore {
         serialize()
     }
 
-    override fun delete(cloth: ClothModel) {
+    override fun delete(cloth: TicketModel) {
         cloths.remove(cloth)
         serialize()
     }

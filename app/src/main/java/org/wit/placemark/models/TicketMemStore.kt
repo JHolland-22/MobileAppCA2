@@ -8,22 +8,22 @@ internal fun getId(): Long {
     return lastId++
 }
 
-class ClothMemStore : ClothStore {
+class ClothMemStore : TicketStore {
 
-    val cloths = ArrayList<ClothModel>()
+    val cloths = ArrayList<TicketModel>()
 
-    override fun findAll(): List<ClothModel> {
+    override fun findAll(): List<TicketModel> {
         return cloths
     }
 
-    override fun create(cloth: ClothModel) {
+    override fun create(cloth: TicketModel) {
         cloth.id = getId()
         cloths.add(cloth)
         logAll()
     }
 
-    override fun update(cloth: ClothModel) {
-        var foundCloth: ClothModel? = cloths.find { p -> p.id == cloth.id }
+    override fun update(cloth: TicketModel) {
+        var foundCloth: TicketModel? = cloths.find { p -> p.id == cloth.id }
         if (foundCloth != null) {
             foundCloth.title = cloth.title
             foundCloth.description = cloth.description

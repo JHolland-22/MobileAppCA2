@@ -1,10 +1,9 @@
-package org.wit.placemark.views.clothing
+package org.wit.placemark.views.ticket
 
 import org.wit.placemark.R
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,15 +12,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.placemark.helpers.showImagePicker
-import org.wit.placemark.models.ClothModel
+import org.wit.placemark.models.TicketModel
 import org.wit.placemark.main.MainApp
 import timber.log.Timber
 
-class ClothActivity : AppCompatActivity() {
+class TicketActivity : AppCompatActivity() {
 
     private val clothingItems = arrayOf("jumpers", "crewnecks", "socks", "shorts")
     private lateinit var binding: ActivityClothBinding
-    private var cloth: ClothModel = ClothModel()
+    private var cloth: TicketModel = TicketModel()
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
 
@@ -85,7 +84,7 @@ class ClothActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_cloth, menu)
+        menuInflater.inflate(R.menu.menu_ticket, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

@@ -1,18 +1,18 @@
-package org.wit.placemark.views.clothinglist
+package org.wit.placemark.views.ticketlist
 
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.wit.placemark.models.ClothModel
+import org.wit.placemark.models.TicketModel
 import org.wit.placemark.databinding.CardClothBinding
 
 
 interface ClothListener {
-    fun onClothClick(cloth: ClothModel)
+    fun onClothClick(cloth: TicketModel)
 }
 
-class ClothAdapter(private var cloths: List<ClothModel>,
+class ClothAdapter(private var cloths: List<TicketModel>,
                    private val listener: ClothListener) :
     RecyclerView.Adapter<ClothAdapter.MainHolder>() {
 
@@ -33,7 +33,7 @@ class ClothAdapter(private var cloths: List<ClothModel>,
     class MainHolder(private val binding : CardClothBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(cloth: ClothModel, listener: ClothListener) {
+        fun bind(cloth: TicketModel, listener: ClothListener) {
             binding.clothTitle.text = cloth.title
             binding.description.text = cloth.description
             binding.root.setOnClickListener { listener.onClothClick(cloth) }

@@ -1,21 +1,19 @@
-package org.wit.placemark.views.clothinglist
+package org.wit.placemark.views.ticketlist
 
 
 import android.content.Intent
-import org.wit.placemark.R
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityClothListBinding
-import org.wit.placemark.views.ClothAdapter
-import org.wit.placemark.views.ClothListener
 import org.wit.placemark.main.MainApp
-import org.wit.placemark.models.ClothModel
+import org.wit.placemark.models.TicketModel
 
-class ClothListActivity : AppCompatActivity(), ClothListener {
+class TicketListActivity : AppCompatActivity(), ClothListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityClothListBinding
@@ -60,7 +58,7 @@ class ClothListActivity : AppCompatActivity(), ClothListener {
             }
         }
 
-    override fun onClothClick(cloth: ClothModel) {
+    override fun onClothClick(cloth: TicketModel) {
         val launcherIntent = Intent(this, ClothActivity::class.java)
         launcherIntent.putExtra("cloth_edit", cloth)
         getClickResult.launch(launcherIntent)
