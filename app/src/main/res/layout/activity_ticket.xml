@@ -7,15 +7,12 @@
     android:layout_height="match_parent"
     tools:context="org.wit.ticket.views.ticket.TicketActivity">
 
-    <!-- AppBar with Toolbar -->
+    <!-- App Bar -->
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:fitsSystemWindows="true"
-        app:elevation="0dp"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarAdd"
@@ -24,83 +21,126 @@
             app:titleTextColor="@color/black" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Scrollable content -->
+    <!-- Scrollable Form -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:spacing="16dp">
+            android:orientation="vertical">
 
-            <!-- Dropdown menu -->
+            <!-- Ticket Type Dropdown -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/select"
-                android:orientation="vertical">
+                android:hint="@string/select">
 
                 <AutoCompleteTextView
-                    android:id="@+id/auto_complete_txt"
+                    android:id="@+id/typeDropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- ticket title gone  for the moment gonna try get drop down menu working -->
+            <!-- Ticket Status Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ticket_status">
+
+                <AutoCompleteTextView
+                    android:id="@+id/statusDropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Match Stage Dropdown -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/match_stage">
+
+                <AutoCompleteTextView
+                    android:id="@+id/stageDropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Team A -->
+            <EditText
+                android:id="@+id/teamA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/team_a"
+                android:padding="8dp" />
+
+            <!-- Team B -->
+            <EditText
+                android:id="@+id/teamB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/team_b"
+                android:padding="8dp" />
+
+            <!-- Pitch Name -->
+            <EditText
+                android:id="@+id/pitchName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pitch_name"
+                android:padding="8dp" />
+
             <!-- Description -->
             <EditText
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="@string/hint_ticketDescription"
-                android:inputType="text"
-                android:maxLength="25"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:padding="8dp" />
 
-            <!-- Add button -->
+            <!-- Match Date Button -->
+            <Button
+                android:id="@+id/dateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_match_date" />
+
+            <!-- Selected Date Display -->
+            <TextView
+                android:id="@+id/matchDateText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_date_selected"
+                android:padding="8dp" />
+
+            <!-- Add Ticket Button -->
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/white"
-                android:padding="8dp"
-                android:text="@string/button_addTicket"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:text="@string/button_addTicket" />
 
-            <!-- Ticket image -->
+            <!-- Ticket Image -->
             <ImageView
                 android:id="@+id/ticketImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                app:srcCompat="@mipmap/ic_launcher"
-                tools:ignore="ImageContrastCheck" />
+                app:srcCompat="@mipmap/ic_launcher" />
 
-            <!-- Choose image button -->
+            <!-- Choose Image Button -->
             <Button
                 android:id="@+id/chooseImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/white"
-                android:importantForAccessibility="no"
-                android:padding="8dp"
-                android:text="@string/button_addImage_ticket"
-                android:textColor="@color/cardview_shadow_start_color"
-                android:textSize="16sp"
-                tools:ignore="VisualLintButtonSize" />
+                android:text="@string/button_addImage_ticket" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
