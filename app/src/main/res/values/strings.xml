@@ -36,6 +36,14 @@
     <string name="save_ticket">Save Ticket</string>
     <string name="button_addImage_ticket"> Add Image </string>
     <string name="select_club_image">Select club image</string>
+    <string name="ticket_status">Ticket Status</string>
+    <string name="match_stage">Match Stage</string>
+    <string name="team_a">Team A</string>
+    <string name="team_b">Team B</string>
+    <string name="pitch_name">Pitch Name</string>
+    <string name="select_match_date">Select Match Date</string>
+    <string name="no_date_selected">No date selected</string>
+
 
 
 
