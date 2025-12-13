@@ -105,7 +105,15 @@ class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             val selectedTitle = binding.typeDropdown.text.toString()
             ticket.title = selectedTitle
             // ticket.title = binding.ticketTitle.text.toString()
+            ticket.ticketStatus = binding.statusDropdown.text.toString()
+            ticket.stage = binding.stageDropdown.text.toString()
+            ticket.teamA = binding.teamA.text.toString()
+            ticket.teamB = binding.teamB.text.toString()
+            ticket.pitchName = binding.pitchName.text.toString()
             ticket.description = binding.description.text.toString()
+            ticket.matchDate = Calendar.getInstance().apply {
+                set(myYear, myMonth, myDay, myHour, myMinute)
+            }.timeInMillis
             if (ticket.title!!.isEmpty()) {
                 Snackbar.make(it, "Please select a ticket type", Snackbar.LENGTH_LONG).show()
             } else {
