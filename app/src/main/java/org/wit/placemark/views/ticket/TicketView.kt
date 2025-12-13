@@ -28,16 +28,16 @@ class TicketView : AppCompatActivity() {
         presenter = TicketPresenter(this)
 
         binding.chooseImage.setOnClickListener {
-            presenter.cacheTicket(binding.autoCompleteTxt.text.toString(), binding.description.text.toString())
+            presenter.cacheTicket(binding.typeDropdown.text.toString(), binding.description.text.toString())
             presenter.doSelectImage()
         }
 
         binding.btnAdd.setOnClickListener {
-            if (binding.autoCompleteTxt.text.toString().isEmpty()) {
+            if (binding.typeDropdown.text.toString().isEmpty()) {
                 Snackbar.make(binding.root, R.string.enter_ticket_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-                presenter.doAddOrSave(binding.autoCompleteTxt.text.toString(), binding.description.text.toString())
+                presenter.doAddOrSave(binding.typeDropdown.text.toString(), binding.description.text.toString())
             }
         }
     }
@@ -62,7 +62,7 @@ class TicketView : AppCompatActivity() {
     }
 
     fun showTicket(ticket: TicketModel) {
-        binding.autoCompleteTxt.setText(ticket.title)
+        binding.typeDropdown.setText(ticket.title)
         binding.description.setText(ticket.description)
         binding.btnAdd.setText(R.string.save_ticket)
         Picasso.get()
