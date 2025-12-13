@@ -1,11 +1,13 @@
 package org.wit.ticket.views.ticketlist
 
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.wit.ticket.models.TicketModel
 import org.wit.placemark.databinding.CardTicketBinding
+import java.util.Date
 
 
 interface TicketListener {
@@ -34,10 +36,34 @@ class TicketAdapter(private var tickets: List<TicketModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(ticket: TicketModel, listener: TicketListener) {
+
             binding.ticketTitle.text = ticket.title
-            binding.description.text = ticket.description
-            binding.root.setOnClickListener { listener.onTicketClick(ticket) }
+            binding.ticketDescription.text = ticket.description
+            binding.ticketStatus.text = ticket.ticketStatus
+            binding.ticketStage.text = ticket.stage
+
+            binding.teams.text = "${ticket.teamA} vs ${ticket.teamB}"
+            binding.pitchName.text = ticket.pitchName
+
+            if (ticket.matchDate != 0L) {
+                val formatter = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                binding.matchDate.text = formatter.format(java.util.Date(ticket.matchDate))
+            } else {
+                binding.matchDate.text = ""
+            }
+
+            if (ticket.image != Uri.EMPTY) {
+                binding.ticketImage.setImageURI(ticket.image)
+            } else {
+                binding.ticketImage.setImageDrawable(null)
+            }
+
+            binding.root.setOnClickListener {
+                listener.onTicketClick(ticket)
+            }
         }
+
+
     }
 }
 

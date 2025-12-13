@@ -56,6 +56,12 @@ class ClothJSONStore(private val context: Context) : TicketStore {
         if (foundTicket != null) {
             foundTicket.title = ticket.title
             foundTicket.description = ticket.description
+            foundTicket.ticketStatus = ticket.ticketStatus
+            foundTicket.stage = ticket.stage
+            foundTicket.teamA = ticket.teamA
+            foundTicket.teamB = ticket.teamB
+            foundTicket.pitchName = ticket.pitchName
+            foundTicket.matchDate = ticket.matchDate
             foundTicket.image = ticket.image
         }
         serialize()
