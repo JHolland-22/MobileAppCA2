@@ -35,7 +35,7 @@ class TicketListActivity : AppCompatActivity(), TicketListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_ticket, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

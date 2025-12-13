@@ -78,7 +78,7 @@ class PlacemarkMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListen
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        //val placemark = marker.tag as PlacemarkModel
+        //val placemark = marker.tag as PlacemarkModel.kt
         val tag = marker.tag as Long
         val placemark = app.placemarks.findById(tag)
         contentBinding.currentTitle.text = placemark!!.title
