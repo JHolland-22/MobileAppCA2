@@ -25,7 +25,6 @@ class PlacemarkView : AppCompatActivity() {
         binding = ActivityPlacemarkBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
 
         presenter = PlacemarkPresenter(this)
 

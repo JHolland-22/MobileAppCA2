@@ -24,7 +24,8 @@ class TicketListActivity : AppCompatActivity(), TicketListener {
         binding = ActivityTicketListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         app = application as MainApp
 
@@ -40,13 +41,18 @@ class TicketListActivity : AppCompatActivity(), TicketListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
             R.id.item_add -> {
                 val launcherIntent = Intent(this, TicketActivity::class.java)
                 getResult.launch(launcherIntent)
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private val getResult =

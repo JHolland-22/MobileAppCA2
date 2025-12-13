@@ -22,9 +22,10 @@ class PlacemarkListView : AppCompatActivity(), PlacemarkListener {
         binding = ActivityPlacemarkListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
         presenter = PlacemarkListPresenter(this)
         app = application as MainApp
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
@@ -37,11 +38,21 @@ class PlacemarkListView : AppCompatActivity(), PlacemarkListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_add -> { presenter.doAddPlacemark() }
-            R.id.item_map -> { presenter.doShowPlacemarksMap() }
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            R.id.item_add -> {
+                presenter.doAddPlacemark()
+                true
+            }
+            R.id.item_map -> {
+                presenter.doShowPlacemarksMap()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onPlacemarkClick(placemark: PlacemarkModel, position: Int) {

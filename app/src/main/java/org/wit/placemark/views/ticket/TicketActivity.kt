@@ -58,8 +58,6 @@ class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         setContentView(binding.root)
 
         binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
-
         app = application as MainApp
 
         Timber.i("Ticket Activity started...")
