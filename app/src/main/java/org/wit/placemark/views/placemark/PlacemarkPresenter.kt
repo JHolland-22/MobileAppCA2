@@ -23,7 +23,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
     init {
         if (view.intent.hasExtra("placemark_edit")) {
             edit = true
-            //placemark = view.intent.getParcelableExtra("placemark_edit",PlacemarkModel::class.java)!!
+            //placemark = view.intent.getParcelableExtra("placemark_edit",PlacemarkModel.kt::class.java)!!
             placemark = view.intent.extras?.getParcelable("placemark_edit")!!
             view.showPlacemark(placemark)
         }
