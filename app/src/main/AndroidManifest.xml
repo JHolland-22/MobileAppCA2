@@ -45,23 +45,18 @@
         </activity>
 
         <activity
-            android:name=".views.ticket.TicketActivity"
+            android:name="org.wit.ticket.views.ticket.TicketActivity"
             android:exported="false" />
 
         <activity
-            android:name=".views.ticketlist.TicketListActivity"
+            android:name="org.wit.ticket.views.ticketlist.TicketListActivity"
             android:exported="false" />
-
-        <activity
-            android:name=".views.editticket.EditTicketActivity"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
-        <activity android:name=".views.placemark.PlacemarkView">
 
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
+
+
     </application>
 
 </manifest>

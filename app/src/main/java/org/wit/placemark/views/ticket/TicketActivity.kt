@@ -15,10 +15,37 @@ import org.wit.placemark.helpers.showImagePicker
 import org.wit.ticket.models.TicketModel
 import org.wit.placemark.main.MainApp
 import timber.log.Timber
+import java.util.Calendar
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.widget.Button
+import android.widget.DatePicker
+import android.widget.TextView
+import android.widget.TimePicker
+import android.text.format.DateFormat
 
-class TicketActivity : AppCompatActivity() {
+
+class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener {
+
+
+    var day = 0
+    var month: Int = 0
+    var year: Int = 0
+    var hour: Int = 0
+    var minute: Int = 0
+    var myDay = 0
+    var myMonth: Int = 0
+    var myYear: Int = 0
+    var myHour: Int = 0
+    var myMinute: Int = 0
+
 
     private val ticketItems = arrayOf("championship ", "league")
+    private val availabilityItems = arrayOf("Available", "Sold Out")
+    private val stageItems = arrayOf("Round 1", "Round 2", "Quarter-final", "Semi-final", "Final")
+
+
     private lateinit var binding: ActivityTicketBinding
     private var ticket: TicketModel = TicketModel()
     private lateinit var app: MainApp
@@ -26,6 +53,7 @@ class TicketActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityTicketBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -36,12 +64,17 @@ class TicketActivity : AppCompatActivity() {
 
         Timber.i("Ticket Activity started...")
 
-        val autocomp = binding.autoCompleteTxt
+        val autocomp = binding.typeDropdown
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, ticketItems)
         autocomp.setAdapter(adapter)
+        val statusAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, availabilityItems)
+        binding.statusDropdown.setAdapter(statusAdapter)
+        val stageAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, stageItems)
+        binding.stageDropdown.setAdapter(stageAdapter)
         autocomp.setOnItemClickListener { parent, view, position, id ->
             Toast.makeText(this, "Clicked: ${ticketItems[position]}", Toast.LENGTH_SHORT).show()
         }
+
 
         var edit = false
         if (intent.hasExtra("ticket_edit")) {
@@ -55,8 +88,21 @@ class TicketActivity : AppCompatActivity() {
                 .into(binding.ticketImage)
         }
 
+        binding.dateButton.setOnClickListener {
+            val calendar: Calendar = Calendar.getInstance()
+            day = calendar.get(Calendar.DAY_OF_MONTH)
+            month = calendar.get(Calendar.MONTH)
+            year = calendar.get(Calendar.YEAR)
+
+            val datePickerDialog =
+                DatePickerDialog(this@TicketActivity, this@TicketActivity, year, month, day)
+
+            datePickerDialog.show()
+        }
+
+
         binding.btnAdd.setOnClickListener {
-            val selectedTitle = binding.autoCompleteTxt.text.toString()
+            val selectedTitle = binding.typeDropdown.text.toString()
             ticket.title = selectedTitle
             // ticket.title = binding.ticketTitle.text.toString()
             ticket.description = binding.description.text.toString()
@@ -108,4 +154,29 @@ class TicketActivity : AppCompatActivity() {
             }
         }
     }
-}
+
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        myDay = dayOfMonth
+        myYear = year
+        myMonth = month
+        val calendar: Calendar = Calendar.getInstance()
+        hour = calendar.get(Calendar.HOUR)
+        minute = calendar.get(Calendar.MINUTE)
+        val timePickerDialog = TimePickerDialog(this@TicketActivity, this@TicketActivity, hour, minute,
+            DateFormat.is24HourFormat(this))
+        timePickerDialog.show()
+    }
+    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        myHour = hourOfDay
+        myMinute = minute
+        binding.matchDateText.text =
+                            "Year" + myYear + "\n" +
+                            "Month" + myMonth + "\n" +
+                            "Day" + myDay + "\n" +
+                            "Hour" + myHour + "\n" +
+                            "Minute" + myMinute +"\n"
+
+    }
+    }
+//https://www.tutorialspoint.com/how-to-use-date-time-picker-dialog-in-kotlin-android

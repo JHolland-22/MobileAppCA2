@@ -20,7 +20,7 @@ class EditLocationView : AppCompatActivity(), OnMapReadyCallback,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_map)
+        setContentView(R.layout.activity_placemark)
         presenter = EditLocationPresenter(this)
         //location = intent.extras?.getParcelable("location",Location::class.java)!!
         location = intent.extras?.getParcelable<Location>("location")!!
