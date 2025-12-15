@@ -23,6 +23,8 @@ import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.TimePicker
 import android.text.format.DateFormat
+import android.view.MenuItem
+import org.wit.placemark.views.placemark.PlacemarkPresenter
 
 
 class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
@@ -50,6 +52,8 @@ class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private var ticket: TicketModel = TicketModel()
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var presenter: TicketPresenter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,8 +144,26 @@ class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
-        if (item.itemId == R.id.item_cancel) finish()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_delete -> {
+                presenter.doDelete()
+                true
+            }
+
+            R.id.item_cancel -> {
+                presenter.doCancel()
+                true
+            }
+
+            android.R.id.home -> {
+                finish()
+                true
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
         return super.onOptionsItemSelected(item)
     }
 

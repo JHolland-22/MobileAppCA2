@@ -11,12 +11,31 @@ import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityPlacemarkBinding
 import org.wit.placemark.models.PlacemarkModel
 import timber.log.Timber
+import android.content.DialogInterface
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 
 class PlacemarkView : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlacemarkBinding
     private lateinit var presenter: PlacemarkPresenter
     var placemark = PlacemarkModel()
+
+
+    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        presenter.doDelete()
+        Toast.makeText(applicationContext,
+            android.R.string.yes, Toast.LENGTH_SHORT).show()
+    }
+    val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            android.R.string.no, Toast.LENGTH_SHORT).show()
+    }
+    val neutralButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            "Maybe", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +77,22 @@ class PlacemarkView : AppCompatActivity() {
         }
     }
 
+    fun basicAlert(view: View) {
+
+        val builder = AlertDialog.Builder(this)
+
+        with(builder)
+        {
+            setTitle("Androidly Alert")
+            setMessage("Are you sure ??????")
+            setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveButtonClick))
+            setNegativeButton(android.R.string.no, negativeButtonClick)
+            setNeutralButton("Maybe", neutralButtonClick)
+            show()
+        }
+    }
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_placemark, menu)
         val deleteMenu: MenuItem = menu.findItem(R.id.item_delete)
@@ -68,7 +103,7 @@ class PlacemarkView : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_delete -> {
-                presenter.doDelete()
+                basicAlert(binding.root)
                 true
             }
 

@@ -23,21 +23,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/ticketDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/ticketStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:textColor="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/ticketStage"
+            android:id="@+id/matchDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/darker_gray" />
@@ -55,9 +41,23 @@
             android:textColor="@android:color/black" />
 
         <TextView
-            android:id="@+id/matchDate"
+            android:id="@+id/ticketDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/ticketStage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/ticketStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:textColor="@android:color/darker_gray" />
 
         <ImageView

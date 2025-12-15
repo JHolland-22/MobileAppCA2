@@ -46,7 +46,7 @@ class TicketAdapter(private var tickets: List<TicketModel>,
             binding.pitchName.text = ticket.pitchName
 
             if (ticket.matchDate != 0L) {
-                val formatter = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault())
+                val formatter = java.text.SimpleDateFormat("dd MMM yyyy HH:mm" ,java.util.Locale.getDefault())
                 binding.matchDate.text = formatter.format(java.util.Date(ticket.matchDate))
             } else {
                 binding.matchDate.text = ""
