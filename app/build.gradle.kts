@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.picasso)
     implementation(libs.play.services.maps)
     implementation(libs.gson)
+    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -110,6 +110,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
                             placemark.lat = location.lat
                             placemark.lng = location.lng
                             placemark.zoom = location.zoom
+                            view.showLocationSet()
                         } // end of if
                     }
                     AppCompatActivity.RESULT_CANCELED -> { } else -> { }

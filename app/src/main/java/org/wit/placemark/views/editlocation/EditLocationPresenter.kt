@@ -48,4 +48,14 @@ class EditLocationPresenter (val view: EditLocationView) {
         val loc = LatLng(location.lat, location.lng)
         marker.snippet = "GPS : $loc"
     }
+
+
+    fun doConfirmLocation() {
+        val resultIntent = Intent()
+        resultIntent.putExtra("location", location)
+        view.setResult(Activity.RESULT_OK, resultIntent)
+        view.finish()
+    }
+
+
 }

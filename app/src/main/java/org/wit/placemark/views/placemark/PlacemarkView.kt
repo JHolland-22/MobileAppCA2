@@ -29,12 +29,18 @@ class PlacemarkView : AppCompatActivity() {
         presenter = PlacemarkPresenter(this)
 
         binding.chooseImage.setOnClickListener {
-            presenter.cachePlacemark(binding.placemarkTitle.text.toString(), binding.description.text.toString())
+            presenter.cachePlacemark(
+                binding.placemarkTitle.text.toString(),
+                binding.description.text.toString()
+            )
             presenter.doSelectImage()
         }
 
         binding.placemarkLocation.setOnClickListener {
-            presenter.cachePlacemark(binding.placemarkTitle.text.toString(), binding.description.text.toString())
+            presenter.cachePlacemark(
+                binding.placemarkTitle.text.toString(),
+                binding.description.text.toString()
+            )
             presenter.doSetLocation()
         }
 
@@ -44,7 +50,10 @@ class PlacemarkView : AppCompatActivity() {
                     .show()
             } else {
                 // presenter.cachePlacemark(binding.placemarkTitle.text.toString(), binding.description.text.toString())
-                presenter.doAddOrSave(binding.placemarkTitle.text.toString(), binding.description.text.toString())
+                presenter.doAddOrSave(
+                    binding.placemarkTitle.text.toString(),
+                    binding.description.text.toString()
+                )
             }
         }
     }
@@ -60,33 +69,56 @@ class PlacemarkView : AppCompatActivity() {
         when (item.itemId) {
             R.id.item_delete -> {
                 presenter.doDelete()
+                true
             }
+
             R.id.item_cancel -> {
                 presenter.doCancel()
+                true
             }
+
+            R.id.item_add, R.id.item_map -> {
+                presenter.doSetLocation()
+                true
+            }
+
+            android.R.id.home -> {
+                finish()
+                true
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun showPlacemark(placemark: PlacemarkModel) {
-        binding.placemarkTitle.setText(placemark.title)
-        binding.description.setText(placemark.description)
-        binding.btnAdd.setText(R.string.save_placemark)
-        Picasso.get()
-            .load(placemark.image)
-            .into(binding.placemarkImage)
-        if (placemark.image != Uri.EMPTY) {
+        fun showPlacemark(placemark: PlacemarkModel) {
+            binding.placemarkTitle.setText(placemark.title)
+            binding.description.setText(placemark.description)
+            binding.btnAdd.setText(R.string.save_placemark)
+            Picasso.get()
+                .load(placemark.image)
+                .into(binding.placemarkImage)
+            if (placemark.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_placemark_image)
+            }
+
+        }
+
+        fun updateImage(image: Uri) {
+            Timber.i("Image updated")
+            Picasso.get()
+                .load(image)
+                .into(binding.placemarkImage)
             binding.chooseImage.setText(R.string.change_placemark_image)
         }
 
-    }
-
-    fun updateImage(image: Uri){
-        Timber.i("Image updated")
-        Picasso.get()
-            .load(image)
-            .into(binding.placemarkImage)
-        binding.chooseImage.setText(R.string.change_placemark_image)
-    }
-
+        fun showLocationSet() {
+            Snackbar.make(
+                binding.root,
+                "Location set",
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
 }

@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -18,9 +18,9 @@
             android:id="@+id/ticketTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/ticketDescription"
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/ticketStage"
@@ -62,8 +62,8 @@
 
         <ImageView
             android:id="@+id/ticketImage"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_width="363dp"
+            android:layout_height="202dp"
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
             tools:src="@mipmap/ic_launcher" />

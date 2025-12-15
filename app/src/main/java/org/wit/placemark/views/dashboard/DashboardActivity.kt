@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import org.wit.placemark.R
-import org.wit.placemark.activities.PlacemarkMapsActivity
+import org.wit.placemark.views.placemarklist.PlacemarkListView
 import org.wit.ticket.views.ticketlist.TicketListActivity
 
 class DashboardActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class DashboardActivity : AppCompatActivity() {
         val ticketsButton: Button = findViewById(R.id.tickets_match)
 
         placemarksButton.setOnClickListener {
-            val intent = Intent(this, PlacemarkMapsActivity::class.java)
+            val intent = Intent(this, PlacemarkListView::class.java)
             startActivity(intent)
         }
 
