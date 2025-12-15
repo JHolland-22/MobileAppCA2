@@ -18,12 +18,15 @@ import timber.log.Timber
 import java.util.Calendar
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.TimePicker
 import android.text.format.DateFormat
 import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import org.wit.placemark.views.placemark.PlacemarkPresenter
 
 
@@ -53,6 +56,20 @@ class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var presenter: TicketPresenter
+
+    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        presenter.doDelete()
+        Toast.makeText(applicationContext,
+            android.R.string.yes, Toast.LENGTH_SHORT).show()
+    }
+    val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            android.R.string.no, Toast.LENGTH_SHORT).show()
+    }
+    val neutralButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            "Maybe", Toast.LENGTH_SHORT).show()
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +101,14 @@ class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             ticket = intent.extras?.getParcelable("ticket_edit")!!
             // binding.ticketTitle.setText(ticket.title)
             binding.description.setText(ticket.description)
+            binding.typeDropdown.setText(ticket.title, false)
+            binding.description.setText(ticket.description)
+            binding.statusDropdown.setText(ticket.ticketStatus, false)
+            binding.stageDropdown.setText(ticket.stage ,false )
+            binding.teamA.setText(ticket.teamA)
+            binding.teamB.setText(ticket.teamB)
+            binding.pitchName.setText(ticket.pitchName)
+            binding.btnAdd.setText(R.string.save_ticket)
             binding.btnAdd.setText(R.string.save_ticket)
             Picasso.get()
                 .load(ticket.image)
@@ -139,6 +164,21 @@ class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
         registerImagePickerCallback()
     }
 
+    fun basicAlert(view: View) {
+
+        val builder = AlertDialog.Builder(this)
+
+        with(builder)
+        {
+            setTitle("Androidly Alert")
+            setMessage("Are you sure ??????")
+            setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveButtonClick))
+            setNegativeButton(android.R.string.no, negativeButtonClick)
+            setNeutralButton("Maybe", neutralButtonClick)
+            show()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
         menuInflater.inflate(R.menu.menu_ticket, menu)
         return super.onCreateOptionsMenu(menu)
@@ -147,7 +187,7 @@ class TicketActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_delete -> {
-                presenter.doDelete()
+                basicAlert(binding.root)
                 true
             }
 

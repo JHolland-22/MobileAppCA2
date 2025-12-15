@@ -1,9 +1,13 @@
 package org.wit.ticket.views.ticket
 
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
@@ -17,6 +21,20 @@ class TicketView : AppCompatActivity() {
     private lateinit var presenter: TicketPresenter
     var ticket = TicketModel()
 
+    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        presenter.doDelete()
+        Toast.makeText(applicationContext,
+            android.R.string.yes, Toast.LENGTH_SHORT).show()
+    }
+    val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            android.R.string.no, Toast.LENGTH_SHORT).show()
+    }
+    val neutralButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            "Maybe", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,7 +46,7 @@ class TicketView : AppCompatActivity() {
         presenter = TicketPresenter(this)
 
         binding.chooseImage.setOnClickListener {
-            presenter.cacheTicket(binding.typeDropdown.text.toString(), binding.description.text.toString())
+            presenter.cacheTicket(binding.typeDropdown.text.toString(), binding.description.text.toString(), binding.statusDropdown.text.toString(), binding.stageDropdown.text.toString(), binding.teamA.text.toString(), binding.teamB.text.toString(), binding.pitchName.text.toString())
             presenter.doSelectImage()
         }
 
@@ -37,8 +55,23 @@ class TicketView : AppCompatActivity() {
                 Snackbar.make(binding.root, R.string.enter_ticket_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
-                presenter.doAddOrSave(binding.typeDropdown.text.toString(), binding.description.text.toString())
+                presenter.doAddOrSave(binding.typeDropdown.text.toString(), binding.description.text.toString(), binding.statusDropdown.text.toString(), binding.stageDropdown.text.toString(), binding.teamA.text.toString(), binding.teamB.text.toString(), binding.pitchName.text.toString())
             }
+        }
+    }
+
+    fun basicAlert(view: View) {
+
+        val builder = AlertDialog.Builder(this)
+
+        with(builder)
+        {
+            setTitle("Androidly Alert")
+            setMessage("Are you sure ??????")
+            setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveButtonClick))
+            setNegativeButton(android.R.string.no, negativeButtonClick)
+            setNeutralButton("Maybe", neutralButtonClick)
+            show()
         }
     }
 
@@ -52,18 +85,25 @@ class TicketView : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_delete -> {
-                presenter.doDelete()
+                basicAlert(binding.root)
+                true
             }
             R.id.item_cancel -> {
                 presenter.doCancel()
+                true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     fun showTicket(ticket: TicketModel) {
-        binding.typeDropdown.setText(ticket.title)
+        binding.typeDropdown.setText(ticket.title, false)
         binding.description.setText(ticket.description)
+        binding.statusDropdown.setText(ticket.ticketStatus, false)
+        binding.stageDropdown.setText(ticket.stage ,false )
+        binding.teamA.setText(ticket.teamA)
+        binding.teamB.setText(ticket.teamB)
+        binding.pitchName.setText(ticket.pitchName)
         binding.btnAdd.setText(R.string.save_ticket)
         Picasso.get()
             .load(ticket.image)

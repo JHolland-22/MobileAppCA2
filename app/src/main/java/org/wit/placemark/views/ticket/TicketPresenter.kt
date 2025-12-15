@@ -25,10 +25,14 @@ class TicketPresenter(private val view: TicketView) {
         registerImagePickerCallback()
     }
 
-    fun doAddOrSave(title: String, description: String) {
+    fun doAddOrSave(title: String, description: String, statusDropdown: String, stageDropdown: String, teamA: String, teamB: String, pitchName: String) {
         ticket.title = title
         ticket.description = description
-
+        ticket.ticketStatus = statusDropdown
+        ticket.stage = stageDropdown
+        ticket.teamA = teamA
+        ticket.teamB = teamB
+        ticket.pitchName = pitchName
         if (edit) {
             app.tickets.update(ticket)
         } else {
@@ -56,9 +60,14 @@ class TicketPresenter(private val view: TicketView) {
         imageIntentLauncher.launch(request)
     }
 
-    fun cacheTicket(title: String, description: String) {
+    fun cacheTicket(title: String, description: String, statusDropdown: String, stageDropdown: String, teamA: String, teamB: String, pitchName: String) {
         ticket.title = title
         ticket.description = description
+        ticket.ticketStatus = statusDropdown
+        ticket.stage = stageDropdown
+        ticket.teamA = teamA
+        ticket.teamB = teamB
+        ticket.pitchName = pitchName
     }
 
     private fun registerImagePickerCallback() {
