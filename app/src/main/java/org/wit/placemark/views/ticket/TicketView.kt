@@ -1,5 +1,7 @@
 package org.wit.ticket.views.ticket
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
@@ -14,8 +16,31 @@ import com.squareup.picasso.Picasso
 import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityTicketBinding
 import org.wit.ticket.models.TicketModel
+import java.util.Calendar
+import android.text.format.DateFormat
+import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import android.widget.TimePicker
 
-class TicketView : AppCompatActivity() {
+
+class TicketView : AppCompatActivity() , DatePickerDialog.OnDateSetListener,
+    TimePickerDialog.OnTimeSetListener{
+
+    var day = 0
+    var month: Int = 0
+    var year: Int = 0
+    var hour: Int = 0
+    var minute: Int = 0
+    var myDay = 0
+    var myMonth: Int = 0
+    var myYear: Int = 0
+    var myHour: Int = 0
+    var myMinute: Int = 0
+
+
+    private val ticketItems = arrayOf("championship ", "league")
+    private val availabilityItems = arrayOf("Available", "Sold Out")
+    private val stageItems = arrayOf("Round 1", "Round 2", "Quarter-final", "Semi-final", "Final")
 
     private lateinit var binding: ActivityTicketBinding
     private lateinit var presenter: TicketPresenter
@@ -41,9 +66,20 @@ class TicketView : AppCompatActivity() {
         binding = ActivityTicketBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
+       // setSupportActionBar(binding.toolbarAdd)
 
         presenter = TicketPresenter(this)
+
+        val autocomp = binding.typeDropdown
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, ticketItems)
+        autocomp.setAdapter(adapter)
+        val statusAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, availabilityItems)
+        binding.statusDropdown.setAdapter(statusAdapter)
+        val stageAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, stageItems)
+        binding.stageDropdown.setAdapter(stageAdapter)
+        autocomp.setOnItemClickListener { parent, view, position, id ->
+            Toast.makeText(this, "Clicked: ${ticketItems[position]}", Toast.LENGTH_SHORT).show()
+        }
 
         binding.chooseImage.setOnClickListener {
             presenter.cacheTicket(binding.typeDropdown.text.toString(), binding.description.text.toString(), binding.statusDropdown.text.toString(), binding.stageDropdown.text.toString(), binding.teamA.text.toString(), binding.teamB.text.toString(), binding.pitchName.text.toString())
@@ -58,6 +94,18 @@ class TicketView : AppCompatActivity() {
                 presenter.doAddOrSave(binding.typeDropdown.text.toString(), binding.description.text.toString(), binding.statusDropdown.text.toString(), binding.stageDropdown.text.toString(), binding.teamA.text.toString(), binding.teamB.text.toString(), binding.pitchName.text.toString())
             }
         }
+        binding.dateButton.setOnClickListener {
+            val calendar: Calendar = Calendar.getInstance()
+            day = calendar.get(Calendar.DAY_OF_MONTH)
+            month = calendar.get(Calendar.MONTH)
+            year = calendar.get(Calendar.YEAR)
+
+            val datePickerDialog =
+                DatePickerDialog(this@TicketView, this@TicketView, year, month, day)
+
+            datePickerDialog.show()
+        }
+
     }
 
     fun basicAlert(view: View) {
@@ -118,5 +166,30 @@ class TicketView : AppCompatActivity() {
             .load(image)
             .into(binding.ticketImage)
         binding.chooseImage.setText(R.string.select_club_image)
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        myDay = dayOfMonth
+        myYear = year
+        myMonth = month
+        val calendar: Calendar = Calendar.getInstance()
+        hour = calendar.get(Calendar.HOUR)
+        minute = calendar.get(Calendar.MINUTE)
+        val timePickerDialog = TimePickerDialog(
+            this@TicketView, this@TicketView, hour, minute,
+            DateFormat.is24HourFormat(this)
+        )
+        timePickerDialog.show()
+    }
+    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        myHour = hourOfDay
+        myMinute = minute
+        presenter.setMatchDate(myYear, myMonth, myDay, myHour, myMinute)
+        binding.matchDateText.text =
+            "Year" + myYear + "\n" +
+                    "Month" + myMonth + "\n" +
+                    "Day" + myDay + "\n" +
+                    "Hour" + myHour + "\n" +
+                    "Minute" + myMinute +"\n"
     }
 }

@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.wit.ticket.models.TicketModel
 import org.wit.placemark.databinding.CardTicketBinding
 import java.util.Date
@@ -51,9 +52,12 @@ class TicketAdapter(private var tickets: List<TicketModel>,
             } else {
                 binding.matchDate.text = ""
             }
-
             if (ticket.image != Uri.EMPTY) {
-                binding.ticketImage.setImageURI(ticket.image)
+                Picasso.get()
+                    .load(ticket.image)
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(binding.ticketImage)
             } else {
                 binding.ticketImage.setImageDrawable(null)
             }

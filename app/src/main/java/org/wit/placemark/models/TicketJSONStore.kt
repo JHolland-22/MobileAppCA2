@@ -23,7 +23,7 @@ fun generateRandomId(): Long {
     return Random().nextLong()
 }
 
-class ClothJSONStore(private val context: Context) : TicketStore {
+class TicketJSONStore(private val context: Context) : TicketStore {
 
     var tickets = mutableListOf<TicketModel>()
 

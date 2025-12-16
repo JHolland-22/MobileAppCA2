@@ -71,14 +71,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
         val launcherIntent = Intent(view, EditLocationView::class.java)
             .putExtra("location", location)
         mapIntentLauncher.launch(launcherIntent)
-    }
-
-    fun cachePlacemark (title: String, description: String) {
-        placemark.title = title
-        placemark.description = description
-    }
-
-    private fun registerImagePickerCallback() {
+    }    private fun registerImagePickerCallback() {
         imageIntentLauncher = view.registerForActivityResult(
             ActivityResultContracts.PickVisualMedia()
         ) {
@@ -95,6 +88,13 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
             }
         }
     }
+
+    fun cachePlacemark (title: String, description: String) {
+        placemark.title = title
+        placemark.description = description
+    }
+
+
 
     private fun registerMapCallback() {
         mapIntentLauncher =

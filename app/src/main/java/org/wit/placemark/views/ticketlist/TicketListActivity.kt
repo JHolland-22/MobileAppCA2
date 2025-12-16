@@ -12,7 +12,7 @@ import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityTicketListBinding
 import org.wit.placemark.main.MainApp
 import org.wit.ticket.models.TicketModel
-import org.wit.ticket.views.ticket.TicketActivity
+import org.wit.ticket.views.ticket.TicketView
 
 class TicketListActivity : AppCompatActivity(), TicketListener {
 
@@ -47,7 +47,7 @@ class TicketListActivity : AppCompatActivity(), TicketListener {
                 true
             }
             R.id.item_add -> {
-                val launcherIntent = Intent(this, TicketActivity::class.java)
+                val launcherIntent = Intent(this, TicketView::class.java)
                 getResult.launch(launcherIntent)
                 true
             }
@@ -66,7 +66,7 @@ class TicketListActivity : AppCompatActivity(), TicketListener {
         }
 
     override fun onTicketClick(ticket: TicketModel) {
-        val launcherIntent = Intent(this, TicketActivity::class.java)
+        val launcherIntent = Intent(this, TicketView::class.java)
         launcherIntent.putExtra("ticket_edit", ticket)
         getClickResult.launch(launcherIntent)
     }

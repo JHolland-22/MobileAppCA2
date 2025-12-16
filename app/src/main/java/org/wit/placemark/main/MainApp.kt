@@ -5,6 +5,7 @@ import org.wit.ticket.models.TicketStore
 import org.wit.ticket.models.TicketMemStore
 import org.wit.placemark.models.PlacemarkJSONStore
 import org.wit.placemark.models.PlacemarkStore
+import org.wit.ticket.models.TicketJSONStore
 import timber.log.Timber
 import timber.log.Timber.i
 
@@ -17,7 +18,7 @@ class MainApp : Application() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         placemarks = PlacemarkJSONStore(applicationContext)
-        tickets = TicketMemStore()
+        tickets = TicketJSONStore(applicationContext)
         i("App started")
     }
 }

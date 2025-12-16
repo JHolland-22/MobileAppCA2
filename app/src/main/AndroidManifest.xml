@@ -54,7 +54,7 @@
             android:exported="false" />
 
         <activity
-            android:name="org.wit.ticket.views.ticket.TicketActivity"
+            android:name="org.wit.ticket.views.ticket.TicketView"
             android:exported="false" />
 
         <activity
