@@ -6,5 +6,6 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#026E8E</color>
     <color name="darker_gray">#AAAAAA</color>
-
+    <color name="backgroundColor">#E4E4E4</color>
+    <color name="textColor">#000000</color>
 </resources>
