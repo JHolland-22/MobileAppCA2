@@ -65,6 +65,11 @@ class PlacemarkJSONStore(private val context: Context) : PlacemarkStore {
         serialize()
     }
 
+    override fun deleteAll() {
+        placemarks.clear()
+        serialize()
+    }
+
 
 
     private fun serialize() {
