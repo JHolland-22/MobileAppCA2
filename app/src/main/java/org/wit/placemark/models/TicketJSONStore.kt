@@ -85,6 +85,11 @@ class TicketJSONStore(private val context: Context) : TicketStore {
     private fun logAll() {
         tickets.forEach { Timber.i("$it") }
     }
+    override fun deleteAll() {
+        tickets.clear()
+        serialize()
+    }
+
 }
 
 class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {

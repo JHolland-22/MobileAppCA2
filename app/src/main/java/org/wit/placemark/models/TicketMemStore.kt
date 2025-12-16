@@ -50,4 +50,8 @@ class TicketMemStore : TicketStore {
     private fun logAll() {
         tickets.forEach { i("$it") }
     }
+    override fun deleteAll() {
+        tickets.clear()
+    }
+
 }
