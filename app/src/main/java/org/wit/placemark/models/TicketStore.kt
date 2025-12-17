@@ -7,4 +7,6 @@ interface TicketStore {
     fun update(ticket: TicketModel)
     fun delete(ticket: TicketModel)
     fun findById(id: Long): TicketModel?
+    fun deleteAll()
+
 }

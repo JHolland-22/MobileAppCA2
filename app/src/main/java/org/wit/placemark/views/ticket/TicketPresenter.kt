@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import org.wit.placemark.main.MainApp
 import org.wit.ticket.models.TicketModel
 import timber.log.Timber
+import java.util.Calendar
 
 class TicketPresenter(private val view: TicketView) {
 
@@ -24,11 +25,14 @@ class TicketPresenter(private val view: TicketView) {
         }
         registerImagePickerCallback()
     }
-
-    fun doAddOrSave(title: String, description: String) {
+    fun doAddOrSave(title: String, description: String, statusDropdown: String, stageDropdown: String, teamA: String, teamB: String, pitchName: String) {
         ticket.title = title
         ticket.description = description
-
+        ticket.ticketStatus = statusDropdown
+        ticket.stage = stageDropdown
+        ticket.teamA = teamA
+        ticket.teamB = teamB
+        ticket.pitchName = pitchName
         if (edit) {
             app.tickets.update(ticket)
         } else {
@@ -56,28 +60,39 @@ class TicketPresenter(private val view: TicketView) {
         imageIntentLauncher.launch(request)
     }
 
-    fun cacheTicket(title: String, description: String) {
+    fun cacheTicket(title: String, description: String, statusDropdown: String, stageDropdown: String, teamA: String, teamB: String, pitchName: String) {
         ticket.title = title
         ticket.description = description
+        ticket.ticketStatus = statusDropdown
+        ticket.stage = stageDropdown
+        ticket.teamA = teamA
+        ticket.teamB = teamB
+        ticket.pitchName = pitchName
     }
 
     private fun registerImagePickerCallback() {
         imageIntentLauncher = view.registerForActivityResult(
             ActivityResultContracts.PickVisualMedia()
-        ) { uri ->
-            try {
-                if (uri != null) {
-                    view.contentResolver.takePersistableUriPermission(
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    )
-                    ticket.image = uri
-                    Timber.i("IMG :: ${ticket.image}")
-                    view.updateImage(ticket.image)
-                }
-            } catch (e: Exception) {
+        ) {
+            try{
+                view.contentResolver
+                    .takePersistableUriPermission(it!!,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION )
+                ticket.image = it // The returned Uri
+                Timber.i("IMG :: ${ticket.image}")
+                view.updateImage(ticket.image)
+            }
+            catch(e:Exception){
                 e.printStackTrace()
             }
         }
     }
+
+
+    fun setMatchDate(year: Int, month: Int, day: Int, hour: Int, minute: Int) {
+        ticket.matchDate = Calendar.getInstance().apply {
+            set(year, month, day, hour, minute)
+        }.timeInMillis
+    }
+
 }

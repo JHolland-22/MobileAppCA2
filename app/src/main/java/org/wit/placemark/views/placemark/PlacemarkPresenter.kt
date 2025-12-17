@@ -23,7 +23,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
     init {
         if (view.intent.hasExtra("placemark_edit")) {
             edit = true
-            //placemark = view.intent.getParcelableExtra("placemark_edit",PlacemarkModel::class.java)!!
+            //placemark = view.intent.getParcelableExtra("placemark_edit",PlacemarkModel.kt::class.java)!!
             placemark = view.intent.extras?.getParcelable("placemark_edit")!!
             view.showPlacemark(placemark)
         }
@@ -71,14 +71,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
         val launcherIntent = Intent(view, EditLocationView::class.java)
             .putExtra("location", location)
         mapIntentLauncher.launch(launcherIntent)
-    }
-
-    fun cachePlacemark (title: String, description: String) {
-        placemark.title = title
-        placemark.description = description
-    }
-
-    private fun registerImagePickerCallback() {
+    }    private fun registerImagePickerCallback() {
         imageIntentLauncher = view.registerForActivityResult(
             ActivityResultContracts.PickVisualMedia()
         ) {
@@ -96,6 +89,13 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
         }
     }
 
+    fun cachePlacemark (title: String, description: String) {
+        placemark.title = title
+        placemark.description = description
+    }
+
+
+
     private fun registerMapCallback() {
         mapIntentLauncher =
             view.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
@@ -110,6 +110,7 @@ class PlacemarkPresenter(private val view: PlacemarkView) {
                             placemark.lat = location.lat
                             placemark.lng = location.lng
                             placemark.zoom = location.zoom
+                            view.showLocationSet()
                         } // end of if
                     }
                     AppCompatActivity.RESULT_CANCELED -> { } else -> { }

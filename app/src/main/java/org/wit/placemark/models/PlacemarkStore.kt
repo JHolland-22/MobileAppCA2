@@ -8,5 +8,6 @@ interface PlacemarkStore {
     fun delete(placemark: PlacemarkModel)
 
     fun findById(id:Long) : PlacemarkModel?
+    fun deleteAll()
 
 }

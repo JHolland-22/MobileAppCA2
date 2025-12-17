@@ -11,12 +11,31 @@ import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityPlacemarkBinding
 import org.wit.placemark.models.PlacemarkModel
 import timber.log.Timber
+import android.content.DialogInterface
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 
 class PlacemarkView : AppCompatActivity() {
 
     private lateinit var binding: ActivityPlacemarkBinding
     private lateinit var presenter: PlacemarkPresenter
     var placemark = PlacemarkModel()
+
+
+    val positiveButtonClick = { dialog: DialogInterface, which: Int ->
+        presenter.doDelete()
+        Toast.makeText(applicationContext,
+            android.R.string.yes, Toast.LENGTH_SHORT).show()
+    }
+    val negativeButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            android.R.string.no, Toast.LENGTH_SHORT).show()
+    }
+    val neutralButtonClick = { dialog: DialogInterface, which: Int ->
+        Toast.makeText(applicationContext,
+            "Maybe", Toast.LENGTH_SHORT).show()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,17 +44,22 @@ class PlacemarkView : AppCompatActivity() {
         binding = ActivityPlacemarkBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
 
         presenter = PlacemarkPresenter(this)
 
         binding.chooseImage.setOnClickListener {
-            presenter.cachePlacemark(binding.placemarkTitle.text.toString(), binding.description.text.toString())
+            presenter.cachePlacemark(
+                binding.placemarkTitle.text.toString(),
+                binding.description.text.toString()
+            )
             presenter.doSelectImage()
         }
 
         binding.placemarkLocation.setOnClickListener {
-            presenter.cachePlacemark(binding.placemarkTitle.text.toString(), binding.description.text.toString())
+            presenter.cachePlacemark(
+                binding.placemarkTitle.text.toString(),
+                binding.description.text.toString()
+            )
             presenter.doSetLocation()
         }
 
@@ -45,10 +69,29 @@ class PlacemarkView : AppCompatActivity() {
                     .show()
             } else {
                 // presenter.cachePlacemark(binding.placemarkTitle.text.toString(), binding.description.text.toString())
-                presenter.doAddOrSave(binding.placemarkTitle.text.toString(), binding.description.text.toString())
+                presenter.doAddOrSave(
+                    binding.placemarkTitle.text.toString(),
+                    binding.description.text.toString()
+                )
             }
         }
     }
+
+    fun basicAlert(view: View) {
+
+        val builder = AlertDialog.Builder(this)
+
+        with(builder)
+        {
+            setTitle("Androidly Alert")
+            setMessage("Are you sure ??????")
+            setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveButtonClick))
+            setNegativeButton(android.R.string.no, negativeButtonClick)
+            setNeutralButton("Maybe", neutralButtonClick)
+            show()
+        }
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_placemark, menu)
@@ -60,34 +103,57 @@ class PlacemarkView : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_delete -> {
-                presenter.doDelete()
+                basicAlert(binding.root)
+                true
             }
+
             R.id.item_cancel -> {
                 presenter.doCancel()
+                true
             }
+
+            R.id.item_add, R.id.item_map -> {
+                presenter.doSetLocation()
+                true
+            }
+
+            android.R.id.home -> {
+                finish()
+                true
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
         return super.onOptionsItemSelected(item)
     }
 
-    fun showPlacemark(placemark: PlacemarkModel) {
-        binding.placemarkTitle.setText(placemark.title)
-        binding.description.setText(placemark.description)
-        binding.btnAdd.setText(R.string.save_placemark)
-        Picasso.get()
-            .load(placemark.image)
-            .into(binding.placemarkImage)
-        if (placemark.image != Uri.EMPTY) {
+        fun showPlacemark(placemark: PlacemarkModel) {
+            binding.placemarkTitle.setText(placemark.title)
+            binding.description.setText(placemark.description)
+            binding.btnAdd.setText(R.string.save_placemark)
+            Picasso.get()
+                .load(placemark.image)
+                .into(binding.placemarkImage)
+            if (placemark.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_placemark_image)
+            }
+
+        }
+
+        fun updateImage(image: Uri) {
+            Timber.i("Image updated")
+            Picasso.get()
+                .load(image)
+                .into(binding.placemarkImage)
             binding.chooseImage.setText(R.string.change_placemark_image)
         }
 
-    }
-
-    fun updateImage(image: Uri){
-        Timber.i("Image updated")
-        Picasso.get()
-            .load(image)
-            .into(binding.placemarkImage)
-        binding.chooseImage.setText(R.string.change_placemark_image)
-    }
-
+        fun showLocationSet() {
+            Snackbar.make(
+                binding.root,
+                "Location set",
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
 }

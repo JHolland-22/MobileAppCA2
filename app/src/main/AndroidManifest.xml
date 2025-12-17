@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
 
@@ -16,22 +16,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Placemark"
         tools:targetApi="34">
-        <activity
-            android:name=".activities.PlacemarkMapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_placemark_maps"
-            android:theme="@style/Theme.Placemark" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/MAPS_API_KEY" />
 
         <activity
+            android:name=".activities.PlacemarkMapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_placemark_maps"
+            android:theme="@style/Theme.Placemark" />
+
+        <activity
             android:name=".views.editlocation.EditLocationView"
             android:label="@string/title_activity_map" />
 
         <activity
-            android:name=".views.placemarklist.PlacemarkListView"
+            android:name=".views.dashboard.DashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,23 +46,24 @@
         </activity>
 
         <activity
-            android:name=".views.ticket.TicketActivity"
+            android:name="org.wit.placemark.views.placemarklist.PlacemarkListView"
             android:exported="false" />
 
         <activity
-            android:name=".views.ticketlist.TicketListActivity"
+            android:name="org.wit.placemark.views.placemark.PlacemarkView"
             android:exported="false" />
 
         <activity
-            android:name=".views.editticket.EditTicketActivity"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
-        <activity android:name=".views.placemark.PlacemarkView">
+            android:name="org.wit.ticket.views.ticket.TicketView"
+            android:exported="false" />
+
+        <activity
+            android:name="org.wit.ticket.views.ticketlist.TicketListActivity"
+            android:exported="false" />
 
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
     </application>
 
 </manifest>

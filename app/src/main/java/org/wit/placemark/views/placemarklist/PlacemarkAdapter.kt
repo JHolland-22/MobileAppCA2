@@ -37,6 +37,7 @@ class PlacemarkAdapter(private var placemarks: List<PlacemarkModel>,
             binding.description.text = placemark.description
             Picasso.get().load(placemark.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onPlacemarkClick(placemark,adapterPosition) }
+            binding.location.text = "Lat: ${placemark.lat}, Lng: ${placemark.lng}"
         }
     }
 }

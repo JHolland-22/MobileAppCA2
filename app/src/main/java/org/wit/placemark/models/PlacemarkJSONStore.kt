@@ -9,7 +9,7 @@ import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
 
-const val JSON_FILE = "placemarks.json"
+const val JSON_FILE = "locations.json"
 val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
     .registerTypeAdapter(Uri::class.java, UriParser())
     .create()
@@ -62,6 +62,11 @@ class PlacemarkJSONStore(private val context: Context) : PlacemarkStore {
 
     override fun delete(placemark: PlacemarkModel) {
         placemarks.remove(placemark)
+        serialize()
+    }
+
+    override fun deleteAll() {
+        placemarks.clear()
         serialize()
     }
 

@@ -23,7 +23,7 @@ fun generateRandomId(): Long {
     return Random().nextLong()
 }
 
-class ClothJSONStore(private val context: Context) : TicketStore {
+class TicketJSONStore(private val context: Context) : TicketStore {
 
     var tickets = mutableListOf<TicketModel>()
 
@@ -56,6 +56,12 @@ class ClothJSONStore(private val context: Context) : TicketStore {
         if (foundTicket != null) {
             foundTicket.title = ticket.title
             foundTicket.description = ticket.description
+            foundTicket.ticketStatus = ticket.ticketStatus
+            foundTicket.stage = ticket.stage
+            foundTicket.teamA = ticket.teamA
+            foundTicket.teamB = ticket.teamB
+            foundTicket.pitchName = ticket.pitchName
+            foundTicket.matchDate = ticket.matchDate
             foundTicket.image = ticket.image
         }
         serialize()
@@ -79,6 +85,11 @@ class ClothJSONStore(private val context: Context) : TicketStore {
     private fun logAll() {
         tickets.forEach { Timber.i("$it") }
     }
+    override fun deleteAll() {
+        tickets.clear()
+        serialize()
+    }
+
 }
 
 class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
