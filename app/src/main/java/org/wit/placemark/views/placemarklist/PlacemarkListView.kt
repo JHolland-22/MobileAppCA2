@@ -93,8 +93,8 @@ class PlacemarkListView : AppCompatActivity(), PlacemarkListener {
         val builder = AlertDialog.Builder(this)
 
         with(builder) {
-            setTitle("Delete all placemarks")
-            setMessage("Are you sure you want to delete all placemarks??????")
+            setTitle("Delete all locations")
+            setMessage("Are you sure you want to delete all locations??????")
             setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveDeleteAllClick))
             setNegativeButton(android.R.string.no, null)
             show()
