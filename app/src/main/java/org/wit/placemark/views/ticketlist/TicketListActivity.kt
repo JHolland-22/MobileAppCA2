@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.placemark.R
 import org.wit.placemark.databinding.ActivityTicketListBinding
 import org.wit.placemark.main.MainApp
+import org.wit.placemark.models.PlacemarkModel
+import org.wit.placemark.views.placemarklist.PlacemarkAdapter
 import org.wit.ticket.models.TicketModel
 import org.wit.ticket.views.ticket.TicketPresenter
 import org.wit.ticket.views.ticket.TicketView
@@ -25,6 +27,7 @@ class TicketListActivity : AppCompatActivity(), TicketListener {
     private lateinit var binding: ActivityTicketListBinding
     lateinit var adapter: TicketAdapter
     private lateinit var presenter: TicketPresenter
+    private var position: Int = 0
 
     val positiveDeleteAllClick = { _: DialogInterface, _: Int ->
         app.tickets.deleteAll()
@@ -90,8 +93,6 @@ class TicketListActivity : AppCompatActivity(), TicketListener {
         launcherIntent.putExtra("ticket_edit", ticket)
         getClickResult.launch(launcherIntent)
     }
-
-
     private val getClickResult =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()

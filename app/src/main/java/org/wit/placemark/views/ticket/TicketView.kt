@@ -55,11 +55,6 @@ class TicketView : AppCompatActivity() , DatePickerDialog.OnDateSetListener,
         Toast.makeText(applicationContext,
             android.R.string.no, Toast.LENGTH_SHORT).show()
     }
-    val neutralButtonClick = { dialog: DialogInterface, which: Int ->
-        Toast.makeText(applicationContext,
-            "Maybe", Toast.LENGTH_SHORT).show()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -114,11 +109,10 @@ class TicketView : AppCompatActivity() , DatePickerDialog.OnDateSetListener,
 
         with(builder)
         {
-            setTitle("Androidly Alert")
+            setTitle("Do you really wanna delete this ticket???")
             setMessage("Are you sure ??????")
             setPositiveButton("OK", DialogInterface.OnClickListener(function = positiveButtonClick))
             setNegativeButton(android.R.string.no, negativeButtonClick)
-            setNeutralButton("Maybe", neutralButtonClick)
             show()
         }
     }
